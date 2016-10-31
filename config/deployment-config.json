@@ -1,0 +1,10 @@
+{
+"S3_CONFIG_BUCKET":"lambda-elasticsearch-index-clean-config",
+"LAMBDA_DEPLOY_BUCKET": "lambda-elasticsearch-index-clean",
+"CONFIG_FILE":"config.json",
+"LAMBDA_FUNC_NAME" :"lambda-elasticsearch-index-clean",
+"LAMBDA_HANDLER":"lambda_function.lambda_handler",
+"LAMBDA_ROLE_ARN":"arn:aws:iam::<YOUR AWS ACCOUNT ID:role/lambda-elasticsearch-index-clean",
+"LAMBDA_TIMEOUT":"120",
+"LAMBDA_MEMORY_SIZE":"128"
+}

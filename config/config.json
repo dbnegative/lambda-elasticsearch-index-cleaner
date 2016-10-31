@@ -1,0 +1,9 @@
+{
+    "es_host": "YOUR ES HOST ENDPOINT",
+    "es_region": "eu-west-1",
+    "es_connection_timeout": 60,
+    "sts_role_arn": "arn:aws:iam::<YOUR AWS ACCOUNT ID:role/lambda-elasticsearch-index-clean",
+    "sts_session_name": "lambda-elasticsearch-index-clean",
+    "string-match": "cloudfrontlog",
+    "expiry-age": "4"
+}
