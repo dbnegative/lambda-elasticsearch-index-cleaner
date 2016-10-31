@@ -13,15 +13,13 @@ Lambda function to cleanup index's according to age
 ###IAM
 * create the lambda IAM role
 ```
-aws iam create-role --role-name lambda-elasticsearch-index-cleaner --assume-role-policy-document="$(cat aws_policies/trust-policy.json|jq -c '.' )"
+aws iam create-role --role-name lambda-elasticsearch-index-cleaner --assume-role-policy-document="$(cat aws_role_policies/trust-policy.json|jq -c '.' )"
 ```
 * modify the role so that it can assume itself for STS token generation
 ```
-aws iam update-assume-role-policy --policy-document="$(cat aws_policies/trust-policy-mod.json|jq -c '.')" --role-name lambda-elasticsearch-index-cleaner
+aws iam update-assume-role-policy --policy-document="$(cat aws_role_policies/trust-policy-mod.json|jq -c '.')" --role-name lambda-elasticsearch-index-cleaner
 ```
-* Add custom policy to allow access to S3, Elasticsearch, Cloudwatch Logs,
-```
-TODO ;)
+* Add access policies to allow S3 readonly, ES access, and basic lambda execution (aka cloudwatch logs) in the AWS IAM console.
 ```
 ###S3
 * create the bucket where the lambda function config will be stored
@@ -92,8 +90,8 @@ aws lambda create-alias --name PROD --function-name lambda-elasticsearch-index-c
   2. select the lambda-elasticsearch-index-cleaner fucntion
   3. press the "Qualifiers" button and select the PROD alias
   4. select the "Triggers" tab
-  5. add an Cloudwatch event trigger
-  6. set the event to scheduled
+  5. add an Cloudwatch Scheduled event trigger
+  6. name the rule to something appropriate
   7. set the event to trigger every day
   8. enable the trigger and save
 
