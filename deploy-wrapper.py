@@ -61,7 +61,7 @@ def publish_s3(filename, bucket, key):
     s3 = boto3.client('s3')
     with open(filename, 'rb') as data:
         s3.upload_fileobj(data, bucket, key)
-    LOGGER.info("Uploaded " + filename + " as " + key + " to S3://" + bucket)
+    LOGGER.info("Uploaded " + filename + " as "+key+ " to S3://" + bucket)
 
 
 def upate_config(env, lambda_config_file, config):
@@ -83,14 +83,7 @@ def upate_config(env, lambda_config_file, config):
                       config['CONFIG_FILE'])
 
 
-def create_lamda_function(function_name,
-                          role_arn,
-                          handler,
-                          bucket,
-                          key,
-                          timeout,
-                          memory_size,
-                          description=''):
+def create_lamda_function(function_name, role_arn, handler, bucket, key, timeout, memory_size, description=''):
     '''
     create a lambda function
     returns the entire response as a JSON string
@@ -221,7 +214,7 @@ def main():
     '''
     main method
     '''
-
+   
     config = load_config(CONFIG_FILE)
 
     parser = argparse.ArgumentParser(
@@ -240,13 +233,13 @@ def main():
     parser_deploy = subparsers.add_parser(
         'deploy', help='deploy function to s3')
     parser_deploy.add_argument(
-        '--env', choices=['DEV', 'STAGE', 'PROD'],
+        '--env', choices=['DEV', 'STAGE', 'PROD', 'LATEST'],
         help='the target enviroment')
 
     parser_config = subparsers.add_parser('config',
                                           help='deploy config to s3')
     parser_config.add_argument('env',
-                               choices=['DEV', 'STAGE', 'PROD'],
+                               choices=['DEV', 'STAGE', 'PROD', 'LATEST'],
                                help='set config for specific enviroment')
     subparsers.add_parser(
         'init', help='creates the base lambda function')
@@ -258,6 +251,10 @@ def main():
         'setup', help='create local build enviroment')
 
     args = parser.parse_args()
+
+    deploy_env = args.env
+    if args.env == 'LATEST':
+        deploy_env = '$LATEST'
 
     # deploy
     if args.subparsers_name == 'deploy':
@@ -272,7 +269,7 @@ def main():
                                  pkg.split('/').pop())
 
         if args.env:
-            LOGGER.debug(update_lamda_alias(args.env, version,
+            LOGGER.debug(update_lamda_alias(deploy_env, version,
                                             config['LAMBDA_FUNC_NAME'], description=''))
 
     # promote
@@ -281,7 +278,7 @@ def main():
 
     # deploy
     if args.subparsers_name == 'config':
-        LOGGER.debug(upate_config(args.env, BASE_DIR +
+        LOGGER.debug(upate_config(deploy_env, BASE_DIR +
                                   "/config/" + config['CONFIG_FILE'], config))
 
     if args.subparsers_name == 'init':
