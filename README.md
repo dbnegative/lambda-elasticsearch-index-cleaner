@@ -69,11 +69,18 @@ pip install virtualenv boto3
 deploy-wrapper.py setup
 ```
 * edit the config/config.json with your own settings, at the minimum the following:
+ * set expiry age in days, logs older than this will be deleted
+ * string-match should be the log index prefix that will be deleted. i.e a string match of "cloudfrontlog" would match indexes called cloudfrontlog-2016-10-21
 ```
-    "es_host": "YOUR AWS ES ENDPOINT ",
+{
+    "es_host": "search-cloudfront-logging-sfgveenrrv6a2d52t5svjyvnzy.eu-west-1.es.amazonaws.com",
     "es_region": "eu-west-1",
-    "sts_role_arn": "YOUR LAMBDA ROLE ARN",
-    "sts_session_name": "lambdastsassume",
+    "es_connection_timeout": 60,
+    "sts_role_arn": "arn:aws:iam::688390856993:role/lambda-elasticsearch-index-clean",
+    "sts_session_name": "lambda-elasticsearch-index-clean",
+    "string-match": "cloudfrontlog",
+    "expiry-age": "4"
+}
 ```
 * create the initial version of the function using the deploy-wrapper.sh
 ```
