@@ -13,7 +13,7 @@
       "Sid": "AllowlambdaToAssumeRole",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::<YOUR AWS ACCOUNT ID:role/lambda-elasticsearch-index-clean"
+        "AWS": "arn:aws:iam::<YOUR AWS ACCOUNT ID:role/lambda-elasticsearch-index-cleaner"
       },
       "Action": "sts:AssumeRole"
     }
