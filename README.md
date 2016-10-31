@@ -19,7 +19,10 @@ aws iam create-role --role-name lambda-elasticsearch-index-cleaner --assume-role
 ```
 aws iam update-assume-role-policy --policy-document="$(cat aws_role_policies/trust-policy-mod.json|jq -c '.')" --role-name lambda-elasticsearch-index-cleaner
 ```
-* Add access policies to allow S3 readonly, ES access, and basic lambda execution (aka cloudwatch logs) in the AWS IAM console.
+* Add access policies to allow 
+ *S3 readonly 
+ *ES access
+ *Basic Lambda execution (aka cloudwatch logs) 
 
 ###S3
 * create the bucket where the lambda function config will be stored
