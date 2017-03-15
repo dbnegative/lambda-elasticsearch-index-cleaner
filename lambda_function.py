@@ -1,6 +1,6 @@
 '''
 Elasticsearch Index Clean - Cleans up old index's according to retention
-dates specified in config. This lambda fucntion is triggered by an AWS cron event
+dates specified in config. This lambda function is triggered by an AWS cron event
 
 Author: Jason Witting
 Version: 0.1
