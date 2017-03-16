@@ -1,7 +1,7 @@
 # Lambda Elasticsearch Index Cleaner
 Lambda function to cleanup index's according to age
 
-##Prerequisites
+## Prerequisites
 * Admin Acess to: AWS S3, Elasticsearch, Lambda, IAM
 * aws cli
 * python 2.7+
@@ -9,8 +9,8 @@ Lambda function to cleanup index's according to age
 * virtualenv
 * jq
 
-##Setup
-###IAM
+## Setup
+### IAM
 * create the lambda IAM role
 ```
 aws iam create-role --role-name lambda-elasticsearch-index-cleaner --assume-role-policy-document="$(cat aws_role_policies/trust-policy.json|jq -c '.' )"
@@ -24,7 +24,7 @@ aws iam update-assume-role-policy --policy-document="$(cat aws_role_policies/tru
  * ES access
  * Basic Lambda execution (aka cloudwatch logs) 
 
-###S3
+### S3
 * create the bucket where the lambda function config will be stored
 ```
 aws s3 mb s3://lambda-elasticsearch-index-cleaner-config --region eu-west-1
@@ -40,7 +40,7 @@ DEV
 STAGE
 PROD
 ```
-###Elasticsearch
+### Elasticsearch
 Permissions policy should allow calls from the lamda role, however in my case I have this open to the domain.
 You will need to get your ES endpoint URL
 
@@ -114,7 +114,7 @@ deploy-wrapper.py deploy --env DEV
 deploy-wrapper.py promote DEV STAGE
 ```
 
-#Deploy-wrapper.py usage
+# Deploy-wrapper.py usage
 ```
 Deploy and manipulate lambda function
 
@@ -133,6 +133,6 @@ optional arguments:
   -h, --help            show this help message and exit
 ```
 
-##TODO
+## TODO
 * aws policy files - S3, ELASTICSEARCH, LOG 
 * improve instructions aka this file
